@@ -1,0 +1,77 @@
+<header class="absolute w-full z-50 bg-white">
+    <div class="flex items-center justify-between w-full h-16 p-[25px] md:h-28 md:px-24">
+      <div class="flex gap-3 items-center">
+        <img class="h-4 md:hidden" alt="menu" src="/images/icon-menu.svg" />
+        <img class="h-5" alt="logo" src="/images/logo.svg" />
+      </div>
+      
+      
+      <div class="flex justify-end gap-3 items-center">
+        <img alt="cart" src="/images/icon-cart.svg" />
+        <img class="h-8 w-8" alt="user" src="/images/image-avatar.png" />
+      </div>
+    </div>
+    
+    <div class="hidden md:block px-24 mb-20">
+      <hr class="border-t-1 border-gray-400">
+    </div>
+  </header>
+  
+  <div class="md:px-24">
+    <main class="pt-16 md:pt-28">
+      <div class="relative items-center">
+        <img alt="product image 1" src="/images/image-product-1.jpg" />
+        <hr>
+        <div class="w-full absolute p-5 flex justify-between top-1/2 -translate-y-1/2">
+          <img class="bg-white rounded-full p-3" alt="previous" src="/images/icon-previous.svg" />
+          
+          <img class="bg-white rounded-full p-3" alt="next" src="/images/icon-next.svg" />
+        </div>
+      </div>
+      
+      <div class="mx-[25px]">
+        <div class="my-5">
+          <p class="pb-2 text-gray-500 text-xs tracking-[2px] font-black uppercase">Sneaker Company</p>
+          <h2 class="py-1 text-gray-900 text-3xl font-bold">Fall Limited Edition Sneakers</h2>
+          <p class="pt-3 text-gray-500 font-gray-400">These low-profile sneakers are your perfect casual wear companion. Featuring a
+            durable rubber outer sole, they’ll withstand everything the weather can offer.</p>
+        </div>
+        
+        <div class="flex my-7 items-center justify-between">
+          <div class="flex items-center gap-3">
+            <h2 class="text-3xl font-bold text-gray-900">
+              $125.00
+            </h2>
+            <p class="px-2 bg-gray-900 font-bold text-white rounded-md">50%</p>
+            
+          </div>
+          
+          <p class="text-gray-500 font-bold line-through">$250.00</p>
+        </div>
+        
+        <div class="mt-7 px-5 py-4 bg-gray-50 flex justify-between items-center rounded-md">
+          <button class="">
+            <img src="/images/icon-minus.svg" alt="minus" class="" />
+          </button>
+          
+          <p class="">0</p>
+          
+          <button class="">
+            <img src="/images/icon-plus.svg" alt="plus" class="" />
+          </button>
+        </div>
+        
+        <button class="mt-4 mb-20 w-full flex items-center justify-center gap-2 bg-orange-500 font-bold p-4 rounded-md shadow-xl shadow-orange-500/50">
+          <img src="/images/icon-cart.svg" alt="Cart" class="color-black" />
+          <span>Add to cart</span>
+        </button>
+      </div>
+    </main>
+  </div>
+  
+  
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+    Coded by <a href="#">Callo, Moselle</a>.
+  </div>
+  </div>
