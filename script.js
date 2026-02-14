@@ -1,23 +1,23 @@
 function WebHeader({ setCart, cart, isOpen, setIsOpen }) {
     return (
         <header className="fixed w-full z-50 bg-white">
-            <div className="flex items-center justify-between w-full h-16 p-[25px] md:h-28 px-24">
+            <div className="flex items-center justify-between w-full h-16 p-[25px] md:h-28 md:px-24 md:pb-0">
                 <div className="flex gap-3 items-center">
                     {/* Toggle Menu */}
-                    <img className="h-5" alt="logo" src="/images/logo.svg" />
                     <ToggleMenu />
-                </div>
+                    <img className="h-5 order-2 md:order-1" alt="logo" src="/images/logo.svg" />
+                    </div>
 
                 {/* Cart and User*/}
                 <div className="flex justify-end gap-3 items-center md:gap-8">
                     <CartIcon setCart={setCart} cart={cart} isOpen={isOpen} setIsOpen={setIsOpen} />
-                    <img className="h-8 w-8" alt="user" src="/images/image-avatar.png" />
+                    <img className="h-8 w-8 rounded-full hover:border border-orange-600" alt="user" src="/images/image-avatar.png" />
                 </div>
             </div>
 
             {/* HR Line */}
             <div className="hidden md:block px-24">
-                <hr className="border-t-1 border-gray-400" />
+                <hr className="border-1 border-gray-400" />
             </div>
         </header>
     );
@@ -47,9 +47,10 @@ function ToggleMenu() {
 
             <ul className={`absolute h-screen w-2/3 top-0 left-0 pt-16 px-[25px] bg-white  ${isOpen ? "block" : "hidden"} 
             
-            md:static md:h-auto md:w-auto md:pt-0 md:flex md:gap-6`}>
-                {menus.map(menu => (<li key={menu} onClick={() => setIsBold(menu)} className={`py-4 cursor-pointer text-gray-900 ${isBold === menu ? "font-bold" : "font-normal"}`}>
+            md:static md:h-auto md:w-auto md:pt-0 md:flex md:gap-6 md:order-2`}>
+                {menus.map(menu => (<li key={menu} onClick={() => setIsBold(menu)} className={`relative py-4 cursor-pointer text-gray-900  ${isBold === menu ? "border-b-4 border-orange-500 font-bold" : "border-none font-normal"}`}>
                 {menu}
+            
                 </li>
                 ))}
             </ul>
@@ -70,19 +71,23 @@ function CartIcon({ setCart, cart, isOpen, setIsOpen }) {
     
     return (
         <>
-            <button className="relative z-50 cursor-pointer" onClick={toggle}>
+            <div className="relative">
+                <button className="relative z-50 cursor-pointer" onClick={toggle}>
                 
                 <span className={`absolute font-bold text-white text-[10px] px-2 rounded-full bg-orange-500 -top-2 -right-2 ${cart.length > 0 ? "block" : "hidden"}`}>{total}</span>
                 <img alt="cart" src="/images/icon-cart.svg" />
             </button>
 
-            {/* Whole cart container */}
-            <div className={`fixed w-[21rem] h-64 top-[75px] left-3 rounded-md bg-white items-center ${isOpen ? "block" : "hidden"}`}>
+{ /* Whole cart container */ }
+<div className={`fixed w-[95%] left-3 h-64 top-[75px] right-0 rounded-md bg-white shadow-lg items-center ${isOpen ? "block" : "hidden"}
+
+md:absolute md:top-[50px] md:-translate-x-1/2 md:w-[30vw]`
+}>
                 {/* Cart Header */}
                 <div>
                     <h1 className="p-4 font-bold">Cart</h1>
 
-                    <hr className="pt-4" />
+                    <hr className="pt-4 md:pt-0" />
                 </div>
 
                 {/* After hr line */}
@@ -120,16 +125,47 @@ function CartIcon({ setCart, cart, isOpen, setIsOpen }) {
                     ))
                     )}
             </div >
+            </div>
         </>
     );
 }
 
 function Gallery() {
     const myImages = [
-        { src: '/images/image-product-1.jpg', alt: 'product image' },
-        { src: '/images/image-product-2.jpg', alt: 'product image' },
-        { src: '/images/image-product-3.jpg', alt: 'product image' },
+        { id: 1, src: '/images/image-product-1.jpg', alt: 'product image' },
+        { id: 2, src: '/images/image-product-2.jpg', alt: 'product image' },
+        { id: 3, src: '/images/image-product-3.jpg', alt: 'product image' },
+        { id: 4, src: '/images/image-product-4.jpg', alt: 'product image' }
     ];
+    
+    function ImgThumbnails() {
+        return (
+            <>
+                <div className="hidden md:block">
+        <ul className="flex justify-between">
+            {myImages.map((myImage,i)=>(<img key={myImage.src} src={myImage.src} alt={myImage.alt} 
+                onClick={()=>setIndex(i)} 
+                className={`w-[20%] mt-8 cursor-pointer hover:opacity-60 rounded-xl ${index === i ? "border-2 border-orange-600 opacity-60" : "border-none"}`} 
+            />
+                ))}
+                </ul>
+    </div>
+            </>
+        );
+    }
+    
+    function lightBox(){
+        return(
+            <>
+                <div className="absolute left-0 w-screen h-screen bg-black opacity-50 items-center">
+                            <img className="md:rounded-xl" alt={myImg.alt} src={myImg.src} />
+        
+                { ImgThumbnails() }
+                </div>
+            </>
+        );
+    }
+    
     
     const [index, setIndex] = React.useState(0);
     
@@ -163,7 +199,9 @@ function Gallery() {
                     </button>
                 </div>
 
-                <img className="rounded-xl" alt={myImg.alt} src={myImg.src} />
+                <img className=" md:rounded-xl" onClick={lightBox} alt={myImg.alt} src={myImg.src} />
+                
+                    {ImgThumbnails()}
             </div>
         </>
     );
@@ -192,8 +230,6 @@ function ProductDesc() {
         </>
     );
 }
-
-function ImgThumbnails() {}
 
 function AddToCart({ cart, setCart }) { // ADDING ITEMS
     const [count, setCount] = React.useState(0);
@@ -235,12 +271,12 @@ function AddToCart({ cart, setCart }) { // ADDING ITEMS
         <div className="mx-[25px] mb-20 md:flex md:gap-4">
             <div className="w-full px-5 py-4 bg-gray-50 flex justify-between items-center rounded-md md:w-1/3">
                 <button className="" onClick={minus} disabled={!hasMinus}>
-                    <img src="/images/icon-minus.svg" alt="minus" className="" />
+                    <img src="/images/icon-minus.svg" alt="minus" className="hover:opacity-60" />
                 </button>
 
                 <p className="font-bold">{count}</p>
 
-                <button className="" onClick={plus}>
+                <button className="hover:opacity-60" onClick={plus}>
                     <img src="/images/icon-plus.svg" alt="plus" className="" />
                 </button>
             </div>
@@ -279,7 +315,7 @@ function App() {
 
             <div className="md:px-24">
                 <main className="pt-8 md:pt-28">
-                    <div className="md:flex md:gap-12 md:px-12 mt-20">
+                    <div className="md:flex md:gap-12 md:px-12 md:mt-20">
                     <Gallery />
                     
                     <div>
