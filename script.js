@@ -2,7 +2,7 @@ function WebHeader({ setCart, cart, isOpen, setIsOpen }) {
     return (
         <header className="fixed w-full z-50 bg-white">
             <div className="flex items-center justify-between w-full h-16 p-[25px] md:h-28 md:px-24 md:pb-0">
-                <div className="flex gap-3 items-center">
+                <div className="flex gap-3 items-center h-full">
                     {/* Toggle Menu */}
                     <ToggleMenu />
                     <img className="h-5 order-2 md:order-1" alt="logo" src="/images/logo.svg" />
@@ -17,7 +17,7 @@ function WebHeader({ setCart, cart, isOpen, setIsOpen }) {
 
             {/* HR Line */}
             <div className="hidden md:block px-24">
-                <hr className="border-1 border-gray-400" />
+                <hr className="border-gray-400" />
             </div>
         </header>
     );
@@ -47,8 +47,8 @@ function ToggleMenu() {
 
             <ul className={`absolute h-screen w-2/3 top-0 left-0 pt-16 px-[25px] bg-white  ${isOpen ? "block" : "hidden"} 
             
-            md:static md:h-auto md:w-auto md:pt-0 md:flex md:gap-6 md:order-2`}>
-                {menus.map(menu => (<li key={menu} onClick={() => setIsBold(menu)} className={`relative py-4 cursor-pointer text-gray-900  ${isBold === menu ? "border-b-4 border-orange-500 font-bold" : "border-none font-normal"}`}>
+            md:static md:h-full md:w-auto md:pt-0 md:flex md:gap-6 md:order-2 md:items-end`}>
+                {menus.map(menu => (<li key={menu} onClick={() => setIsBold(menu)} className={`relative h-full flex items-end pb-6 cursor-pointer text-gray-900 border-b-4 ${isBold === menu ? "border-orange-500 font-bold" : "border-transparent font-normal"}`}>
                 {menu}
             
                 </li>
@@ -154,13 +154,35 @@ function Gallery() {
         );
     }
     
-    function lightBox(){
-        return(
+    const [lightbox, setIsLightbox] = React.useState(false);
+    
+    function Lightbox(setIsLightbox) {
+        return (
             <>
-                <div className="absolute left-0 w-screen h-screen bg-black opacity-50 items-center">
-                            <img className="md:rounded-xl" alt={myImg.alt} src={myImg.src} />
-        
-                { ImgThumbnails() }
+                <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
+                    <div className="relative w-1/2 items-center">
+    
+                              <button className="absolute z-50 right-5 top-0" onClick={()=>setIsLightbox(false)}>
+                        <img className="" alt="close" src="/images/icon-close.svg" />
+                    </button>
+                    
+                        <div className="w-full absolute flex justify-between top-1/2 -translate-y-1/2">
+                    <button className="z-50" onClick={imgPrev} disabled={!hasPrev}>
+                        <img className="bg-white rounded-full p-3" alt="previous" src="/images/icon-previous.svg" />
+                    </button>
+
+                    <button className="z-50" onClick={imgNext} disabled={!hasNext}>
+                        <img className="bg-white rounded-full p-3" alt="next" src="/images/icon-next.svg" />
+                    </button>
+                </div>
+                    
+                     <img className="border-[20px] border-transparent pt-4 md:rounded-xl" alt={myImg.alt} src={myImg.src} />
+                
+                <div className="px-8">
+                    <ImgThumbnails />
+                </div>
+                
+                </div>
                 </div>
             </>
         );
@@ -199,9 +221,11 @@ function Gallery() {
                     </button>
                 </div>
 
-                <img className=" md:rounded-xl" onClick={lightBox} alt={myImg.alt} src={myImg.src} />
+                <img className="md:rounded-xl" onClick={()=> setIsLightbox(true)} alt={myImg.alt} src={myImg.src} />
                 
-                    {ImgThumbnails()}
+                    <ImgThumbnails/>
+                    
+                {lightbox && (<Lightbox setIsLightbox={setIsLightbox}/>)}
             </div>
         </>
     );
